@@ -1,19 +1,36 @@
 pragma solidity >=0.5.0;
 
 contract DStorage {
-  // Name
-  // Number of files
-  // Mapping fileId=>Struct 
-  string public name = 'DStorage';
-  // Struct
+  string public name = 'DStorage';  //Name of the smart contract
+  uint public fileCount = 0;
+  mapping(uint => File) public files; //Mapping for the files
 
-
-  // Event
+  struct File //struct of file data
+  {
+    uint fileId;
+    string fileHash;
+    uint fileSize;
+    string fileType;
+    string fileName;
+    string fileDescription;
+    uint uploadTime;
+    address payable uploader;
+  }
 
   constructor() public {
   }
 
-  // Upload File function
+  //For uploading a file to the blockchain
+  function uploadFile(string memory _fileHash,
+                      uint _fileSize,
+                      string memory _fileType,
+                      string memory _fileName,
+                      string memory _fileDescription) public {
+    
+    fileCount++;
+    files[1] = File(fileCount, _fileHash, _fileSize, _fileType, _fileName, _fileDescription, now, msg.sender);
+    
+  }
 
     // Make sure the file hash exists
 
