@@ -17,6 +17,17 @@ contract DStorage {
     address payable uploader;
   }
 
+  event FileUploaded( //Event to be emitted when a file is uploaded
+    uint fileId,
+    string fileHash,
+    uint fileSize,
+    string fileType,
+    string fileName,
+    string fileDescription,
+    uint uploadTime,
+    address payable uploader
+  );
+
   constructor() public {
   }
 
@@ -27,9 +38,18 @@ contract DStorage {
                       string memory _fileName,
                       string memory _fileDescription) public {
     
+    require(bytes(_fileHash).length > 0); //File Hash should exist
+    require(_fileSize > 0);  //File Size should be greater than 0
+    require(bytes(_fileType).length > 0); //File Type should exist
+    require(bytes(_fileName).length > 0); //File Name is given
+    require(bytes(_fileDescription).length > 0); //File Description is given
+    require(msg.sender != address(0));  //File Uploader address exists
+
+    //Actual File Uploading
     fileCount++;
-    files[1] = File(fileCount, _fileHash, _fileSize, _fileType, _fileName, _fileDescription, now, msg.sender);
+    files[fileCount] = File(fileCount, _fileHash, _fileSize, _fileType, _fileName, _fileDescription, block.timestamp, msg.sender);
     
+    emit FileUploaded(fileCount, _fileHash, _fileSize, _fileType, _fileName, _fileDescription, block.timestamp, msg.sender);
   }
 
     // Make sure the file hash exists
