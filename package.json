@@ -2,7 +2,7 @@
   "name": "dstorage",
   "version": "0.1.0",
   "description": "Decentralized File Storage",
-  "author": "github.com/xternet",
+  "author": "Dapp University",
   "homepage": ".",
   "dependencies": {
     "@truffle/hdwallet-provider": "^1.1.0",
